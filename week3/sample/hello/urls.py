@@ -1,0 +1,10 @@
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path("", views.index, name="index"),
+    path("<str:name>", views.greet, name="greet"),
+    path("tony/", views.tony, name="tony"),
+    path("fergie/", views.fergie, name="fergie")
+]
