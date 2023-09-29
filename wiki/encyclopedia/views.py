@@ -58,7 +58,12 @@ def new_page(request):
     
 
 def edit_page(request, entry_name):
-     # Check if request method is POST (i.e., user has submitted the form)
+    # Check if entry exists; if not, return error message
+    entry_content = util.get_entry(entry_name)
+    if entry_content is None:
+        return render(request, 'encyclopedia/error.html', {'message': "404: Entry does not exist"})
+     
+    # Check if request method is POST (i.e., user has submitted the form)
     if request.method == "POST":
         # Retreive new content from form
         new_content = request.POST.get('content')
@@ -70,6 +75,6 @@ def edit_page(request, entry_name):
     # If request method is GET, render edit entry form with content pre-populated
     else:
         content = util.get_entry(entry_name)
-        return render(request, 'encyclopedia/edit_page.html', {'content': content})
+        return render(request, 'encyclopedia/edit_page.html', {'entry_name': entry_name, 'content': content})
     
 
