@@ -1,4 +1,5 @@
 import markdown2
+import random
 
 from django.shortcuts import redirect, render
 
@@ -78,3 +79,9 @@ def edit_page(request, entry_name):
         return render(request, 'encyclopedia/edit_page.html', {'entry_name': entry_name, 'content': content})
     
 
+def random_page(request):
+    # Get all entries
+    entries = util.list_entries()
+    # Select a random entry
+    random_entry = random.choice(entries)
+    return redirect('entry', entry_name=random_entry)
